@@ -266,10 +266,14 @@ Description: A violin plot showing the distribution of units sold (Quantity) by 
 2. TreeMap: Sales Amount by Product Name
 Description: A TreeMap chart displaying the sales amount (Sales) by product name (ProductName).
 
+![TreeMap Plot](treemap_plot.svg)
 
 3. Sankey Diagram: Sales Flow by Year, Month, and Category
 Description: A Sankey diagram illustrating the sales flow grouped by year (Year), month (Month), and product category (Category).
 
+![Sankey Diagram Plot](sankey_plot.svg)
 
 4. Bar Chart: Sales Amount by Country
 Description: A bar chart showing the total sales amount by country (Country).
+
+![Bar Plot](bar_plot.svg)
