@@ -194,3 +194,82 @@ CALCULATE(
     - Implement incremental refresh
     - Use summarized tables for overview pages
     - Limit high-cardinality visuals
+
+
+# Sales Data Visualization
+
+This section contains a series of interactive and static visualizations to explore the sales data. Several Python libraries such as `pandas`, `matplotlib`, `seaborn`, and `plotly` are used to generate charts and perform exploratory data analysis.
+
+## Requirements
+
+Make sure you have the following libraries installed to run this code:
+
+- `pandas`
+- `matplotlib`
+- `seaborn`
+- `plotly`
+
+You can install the required dependencies by running the following command:
+
+```bash
+pip install pandas matplotlib seaborn plotly
+
+## Code Description
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+# Load the dataset
+file_path = "sales-data-sample.csv"  # Change this path if needed
+df = pd.read_csv(file_path)
+
+# Convert 'OrderDate' to datetime format
+df['OrderDate'] = pd.to_datetime(df['OrderDate'])
+df['Year'] = df['OrderDate'].dt.year
+df['Month'] = df['OrderDate'].dt.month
+
+# --- 1. Violin Plot: Units by Product Category ---
+plt.figure(figsize=(8, 6))
+sns.violinplot(x='Category', y='Quantity', data=df, palette='coolwarm')
+plt.title('Units Sold by Product Category')
+plt.xticks(rotation=45)
+plt.savefig('violin_plot.svg')  # save image
+plt.show()
+
+# --- 2. TreeMap: Sales Amount by Product Name ---
+fig = px.treemap(df, path=['ProductName'], values='Sales', title='Sales Amount by Product Name')
+fig.write_image('treemap_plot.svg')  # save image
+fig.show()
+
+# --- 3. Sankey Diagram: Sales Flow by Year, Month, and Category ---
+fig = px.parallel_categories(df, dimensions=['Year', 'Month', 'Category'], title='Sales Flow by Year, Month and Category')
+fig.write_image('sankey_plot.svg')  # save image
+fig.show()
+
+# --- 4. Bar Chart: Sales Amount by Country ---
+country_sales = df.groupby('Country')['Sales'].sum().reset_index()
+fig = px.bar(country_sales, x='Country', y='Sales', title='Sales Amount by Country', text_auto=True)
+fig.write_image('bar_plot.svg')  # save imagen
+fig.show()
+```
+
+The code is designed to load the dataset and generate a series of charts to explore product sales. Below are the visualizations generated:
+
+1. Violin Plot: Units Sold by Product Category
+Description: A violin plot showing the distribution of units sold (Quantity) by product category (Category).
+
+![Violin Plot](violin_plot.svg)
+
+2. TreeMap: Sales Amount by Product Name
+Description: A TreeMap chart displaying the sales amount (Sales) by product name (ProductName).
+
+
+3. Sankey Diagram: Sales Flow by Year, Month, and Category
+Description: A Sankey diagram illustrating the sales flow grouped by year (Year), month (Month), and product category (Category).
+
+
+4. Bar Chart: Sales Amount by Country
+Description: A bar chart showing the total sales amount by country (Country).
